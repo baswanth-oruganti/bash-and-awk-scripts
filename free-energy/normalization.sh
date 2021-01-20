@@ -1,12 +1,13 @@
 #!/bin/bash
 
-max=$(awk '$1!="#!" {print}' COLVAR | awk 'BEGIN {max=0.0}; {if ($2>max) max=$2} END {printf "%.2f", max}')
-min=$(awk '$1!="#!" {print}' COLVAR | awk 'BEGIN {min=100000}; {if ($2<min) min=$2} END {printf "%.2f", min}')
+
+awk 'NR==2{max=$2}; $1!="#!"{if (max<$2) max=$2};END{printf "max=%.2f\n",max}' COLVAR
+awk 'NR==2{min=$2}; $1!="#!"{if (min>$2) min=$2};END{printf "min=%.2f\n",min}' COLVAR
 
 
 # min-max scaling or Normalization
 
 max=71.0
 min=0.0
-awk '$1!="#!" {print}' COLVAR | awk -v "maxi=$max" -v "mini=$min" '{printf "%4.2f\t%4.2f\n",($2-mini)/(maxi-mini),$3}'
+awk '$1!="#!" {print}' COLVAR | awk -v "maxi=$max" -v "mini=$min" '{printf "%4.2f\t%4.2f\n",($2-mini)/(maxi-mini),$3}' > normalized.txt
 
