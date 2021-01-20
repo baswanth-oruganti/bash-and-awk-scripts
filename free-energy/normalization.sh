@@ -8,5 +8,5 @@ min=$(awk '$1!="#!" {print}' COLVAR | awk 'BEGIN {min=100000}; {if ($2<min) min=
 
 max=71.0
 min=0.0
-awk '$1!="#!" {print}' COLVAR | awk -v "maxi=$max" -v "mini=$min" '{printf "%4.2f " "%4.2f\n",($2-mini)/(maxi-mini),$3}'
+awk '$1!="#!" {print}' COLVAR | awk -v "maxi=$max" -v "mini=$min" '{printf "%4.2f\t%4.2f\n",($2-mini)/(maxi-mini),$3}'
 
